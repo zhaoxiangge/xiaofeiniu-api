@@ -45,9 +45,31 @@ router.get('/',(req,res)=>{
  *请求参数：
  * 接收客户端上传的菜品图片，保存在服务器上，返回该图片在服务器上的随机文件名
  */
+//引入中间件multer
+const multer  = require('multer');
+const fs = require("fs");
+var upload = multer({ dest: 
+    "tmp/"//指定客户端上传的文件临时存储路径
+})
 
-
-
+router.post('/image',upload.single('dishImg'),(req,res)=>{
+    // console.log(req.file);//客户端上传的文件
+    // console.log(req.body);//客户端随图片提交的字符数据
+    //把客户端上传的文件从临时目录转移到永久的图片路径下
+    var tmpFile = req.file.path;
+    var suffix = req.file.originalname.substring(req.file.originalname.lastIndexOf("."));
+    var newFile =  randFileName(suffix);//目标文件名
+    fs.rename(tmpFile,'img/dish/'+newFile,()=>{
+        res.send({code:200,msg:'upload succ',fileNmae:newFile})
+    })
+})
+//生成一个随机文件名
+//参数：suffix表示要生成的文件名中的后缀
+function randFileName(suffix){
+    var time = new Date().getTime();
+    var num = Math.floor(Math.random()*(10000-1000)+1000) //四位随机数
+    return time+'-'+num+suffix
+}
 
 /* POST /admin/dish
  * 添加新的菜品

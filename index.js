@@ -8,8 +8,7 @@ const bodyParser = require('body-parser');
 const categoryRouter = require('./routes/admin/category');
 const adminRouter = require('./routes/admin/admin');
 const dishRouter = require('./routes/admin/dish')
-const multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
+
 //创建HTTP应用服务器
 var app = express(); 
 app.listen(PORT, ()=>{
