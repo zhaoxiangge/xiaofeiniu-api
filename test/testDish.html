@@ -9,9 +9,13 @@
 <body>
     <button id="bt1">获取所有菜品</button>
     <button id="bt2">获取某一道菜</button>
-    <button id="bt3">添加菜品</button>
-    <button id="bt4">删除菜品</button>
-    <button id="bt5">修改菜品</button>
+    <input type="text" id = 'inputDesc'>
+    <input type="file" id = 'inputFile'>
+    <button id="bt3" type="button">异步上传图片</button>
+    <hr>
+    <button id="bt4">添加菜品</button>
+    <button id="bt5">删除菜品</button>
+    <button id="bt6">修改菜品</button>
     <script src="axios.min.js"></script>
     <script>
         bt1.onclick=function(){
@@ -20,6 +24,40 @@
             }).catch((err)=>{
                 console.log(err);
             })
+        }
+
+        bt3.onclick = function(){
+            //异步上传文件
+            //手工创建一个multipart/formData形式的请求主体
+            var data = new FormData();
+            data.append('description',inputDesc.value);
+            //详情求主体中追加用户选中的文件
+            //console.dir(inputFile)
+            data.append('dishImg',inputFile.files[0]);
+            
+            axios.post('http://127.0.0.1:8090/admin/dish/image',data).then((res)=>{
+                alert(JSON.stringify(res.data));
+            }).catch((err)=>{
+                console.log(err)
+            })
+        }
+
+
+
+        bt4.onclick = function(){
+            var data = {
+                title:'小烧饼',
+                imgUrl:'123456.jpg',
+                price:35,
+                detail:'小烧饼的详细介绍',
+                categoryId:3
+            }
+            axios.post(
+                'http://127.0.0.1:8090/admin/dish',data).then((res)=>{
+                    console.log(res.data);
+                }).catch((err)=>{
+                    console.log(err)
+                })
         }
     </script>
     <hr>

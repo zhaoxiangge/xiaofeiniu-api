@@ -44,6 +44,7 @@ router.get('/',(req,res)=>{
 /* POST /admin/dish/image
  *请求参数：
  * 接收客户端上传的菜品图片，保存在服务器上，返回该图片在服务器上的随机文件名
+ * {code:200,msg:"upload succ",fileName:'152362536253262-1212.jpg'}
  */
 //引入中间件multer
 const multer  = require('multer');
@@ -74,3 +75,9 @@ function randFileName(suffix){
 /* POST /admin/dish
  * 添加新的菜品
  */
+router.post('/',(req,res)=>{
+    pool.query('INSERT INTO xfn_dish SET ?',req.body,(err,result)=>{
+        if(err)throw err;
+        res.send({code:200,msg:'dish added succ',dishId:result.insertId})
+    })
+})
