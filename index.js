@@ -32,3 +32,5 @@ app.use('/admin/table', tableRouter);
 
 //挂载顾客app必须的路由器
 app.use('/admin/dish',dishRouter)
+
+//https://git.sinacloud.com/xfxapi
