@@ -27,3 +27,7 @@ app.use('/admin/category', categoryRouter);
 app.use('/admin', adminRouter);
 app.use('/admin/settings', settingsRouter);
 app.use('/admin/table', tableRouter);
+
+
+//挂载顾客app必须的路由器
+app.use('/dish',dishRouter)
